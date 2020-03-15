@@ -1,0 +1,75 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>SEARCH RESULTS</title>
+        <meta name="description" content="A search results page.">
+        <link rel="stylesheet" href="main.css">
+    </head>
+    
+    <body class="result_body">
+    <header>
+      <nav>
+        <img id="details_logo" src="/details-logo.png"/>
+        <div class="details_form">  
+            <form style="margin-top: 10px;">
+            
+                <input type="text" id="form-search" name = "searchInput"placeholder="">
+               <a href="/search"><input class="buttons" type=submit value="Search" style=""></a>
+            </form>
+        </div>  
+      </nav>  
+    </header>  
+        <!-- Search result 1 -->
+        <h2 th:text="${title1}"></h2>
+        <p th:text="${content1}"></p>
+        <samp class="path"
+           th:text="${add1}">
+        </samp>
+        
+        <!-- Search result 2 -->
+        <h2 th:text="${title2}"></h2>
+        <p th:text="${content2}"></p>
+        <samp class="path"
+           th:text="${add2}">
+        </samp>
+        
+        <!-- Search result 3 -->
+        <h2 th:text="${title3}"></h2>
+        <p th:text="${content3}"></p>
+        <samp class="path"
+           th:text="${add3}">
+        </samp>
+        
+        <!-- Search result 4 -->
+        <h2 th:text="${title4}"></h2>
+        <p th:text="${content4}"> </p>
+        <samp class="path"
+           th:text="${add4}">
+        </samp>
+                
+        <!-- Search result 5 -->
+        <h2 th:text="${title5}"> </h2>
+        <p th:text="${content5}"> </p>
+        <samp class="path" th:text="${add5}">
+        </samp>
+        <br> </br>
+        <br> </br>
+        <div class="pagination">
+            <a href="#">&laquo;</a>
+            <a class="active" href="#">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">6</a>
+            <a href="#">&raquo;</a>
+          </div>
+        <br> </br>
+        <br> </br>
+    </body>
+</html>
