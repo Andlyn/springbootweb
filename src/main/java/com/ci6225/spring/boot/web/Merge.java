@@ -20,7 +20,7 @@ public class Merge {
 				map1.put((String)temp.getKey(), innerSet);
 			}
 		}
-		System.out.println(map1);
+		//System.out.println(map1);
 		return map1;
 	}
 }

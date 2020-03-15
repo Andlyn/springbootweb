@@ -23,7 +23,7 @@ public class Transformation {
 				index.put((String)temp.getKey(), innerSet);
 			}
 		}
-		System.out.println(index);
+		//System.out.println(index);
 		return index;
 	}
 	

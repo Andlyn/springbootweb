@@ -16,4 +16,15 @@ public class Linguistic {
         }
         return outPutList;
     }
+    
+    public  static ArrayList<String> LinguisticsKeys(ArrayList<String> list)
+    {
+        PorterStemmer porterStemmer = new PorterStemmer();
+        ArrayList<String> outPutList = new ArrayList<String> () ;
+        for (String pair:list
+             ) {
+              outPutList.add(porterStemmer.stemWord(pair));
+        }
+        return outPutList;
+    }
 }

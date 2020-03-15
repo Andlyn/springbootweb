@@ -37,6 +37,7 @@ public String test2(HttpServletRequest request, HashMap<String, Object> map) thr
         return "main"; 
 	else 
 	{
+		//Mainclass.GetIndex();
 		ArrayList<String> results = Mainclass.hi(key[0]);
 		for(int i=1;i<=results.size();i++)
 		{
