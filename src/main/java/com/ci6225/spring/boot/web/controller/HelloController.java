@@ -19,12 +19,13 @@ import com.ci6225.spring.boot.web.Toolkit;
 @Controller
 public class HelloController {
 	
-	@RequestMapping("/hello")
+	@RequestMapping("/index")
 	@ResponseBody
-	public String hello(@RequestParam String name) throws IOException
+	public String hello() throws IOException
 	{
-		//Mainclass.hi("1");
-		return Mainclass.hi("2009").get(0);
+		Mainclass.GetIndex();
+		return"main";
+		
 	}
 	
 
