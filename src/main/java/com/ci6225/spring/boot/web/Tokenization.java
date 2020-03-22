@@ -12,7 +12,8 @@ public class Tokenization {
     {
         ArrayList<Pair<String,String>> outPutList = new ArrayList<Pair<String,String>> () ;
         StringTokenizer terms = new StringTokenizer(content);
-        for(int i = 0;i<terms.countTokens();i++){
+        int sum = terms.countTokens();
+        for(int i = 0;i<sum;i++){
             Pair<String,String> term = new Pair<>(terms.nextToken(),docId);
             outPutList.add(term);
         }
@@ -23,7 +24,9 @@ public class Tokenization {
     {
         ArrayList<String> outPutList = new ArrayList<String> () ;
         StringTokenizer terms = new StringTokenizer(content);
-        for(int i = 0;i<terms.countTokens();i++){
+        int sum = terms.countTokens();
+        for(int i = 0;i<sum;i++){
+        	
             outPutList.add(terms.nextToken());
         }
         return outPutList;

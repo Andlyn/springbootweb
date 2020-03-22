@@ -23,7 +23,13 @@
             </form>
         </div>  
       </nav>  
-    </header>  
+    </header> 
+    <h2 > Total results:</h2> 
+    <h3 th:text="${total}"> in total</h3>
+    <h2 > Started</h2> 
+    <h3 th:text="${start}"> (start)</h3>
+    <h2 > Ended</h2> 
+    <h3 th:text="${end}">(end)</h3>
         <!-- Search result 1 -->
         <h2 th:text="${title1}"></h2>
         <p th:text="${content1}"></p>

@@ -32,7 +32,7 @@ public class Mainclass
 		
 		List<String> files = Toolkit.DirctoryListing();
 		//int size = files.size();
-		int size = 50;
+		int size = 500;
 		TreeMap<String, TreeSet<String>> list1 = GetPartIndex(0,size/2,files);
 		TreeMap<String, TreeSet<String>> list2 = GetPartIndex(size/2,size,files);
 		TreeMap<String, TreeSet<String>> list3 = Merge.merge(list1, list2);		
