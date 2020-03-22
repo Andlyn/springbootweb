@@ -25,12 +25,15 @@ public class HelloController {
 	@ResponseBody
 	public String hello() throws IOException
 	{
-		
+		long beforeTotal = Runtime.getRuntime().totalMemory();
+		long beforeFree = Runtime.getRuntime().freeMemory();
 	    Date d1 = new Date();
 		Mainclass.GetIndex();
 		Date d2 = new Date();
+		long afterTotal = Runtime.getRuntime().totalMemory();
+		long afterFree = Runtime.getRuntime().freeMemory();
 		//long d3 =d2.getTime() - d1.getTime();
-		return"Started creating: "+sdf.format(d1)+" Finished: " +sdf.format(d2);
+		return"Started creating: "+sdf.format(d1)+" Finished: " +sdf.format(d2) +" Total Memory before buliding index: "+ beforeTotal + " Free Memory before buliding index: " + beforeFree +" Total Memory after buliding index: "+ afterTotal +" Free Memory after buliding index: "+afterFree;
 		
 	}
 	

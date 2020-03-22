@@ -15,16 +15,21 @@ public class PairList {
     public static ArrayList<Pair<String, String>>  sortPairList(ArrayList<Pair<String, String>> pl) {
         Collections.sort(pl, new Comparator<Pair<String, String>>() {
             public int compare(Pair<String, String> a, Pair<String, String> b) {
-                String aKey = a.getKey();
+            	String aKey = a.getKey();
                 String aValue = a.getValue();
                 String bKey = b.getKey();
                 String bValue = b.getValue();
+                if (aKey == null || aValue == null || bKey == null || bValue == null) {
+                    throw new NullPointerException("contact pkuimyy@gmail.com");
+                }
 
                 if (aKey.compareTo(bKey) > 0) {
                     return 1;
                 } else if (aKey.compareTo(bKey) == 0) {
                     if (aValue.compareTo(bValue) > 0) {
                         return 1;
+                    } else if (aValue.compareTo(bValue) == 0) {
+                        return 0;
                     } else {
                         return -1;
                     }
