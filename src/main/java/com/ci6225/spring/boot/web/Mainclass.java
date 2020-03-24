@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -28,22 +29,49 @@ import org.springframework.util.ResourceUtils;
 
 public class Mainclass
 {
-	public static void GetIndex() throws IOException  {
-		
+	public static File path;
+	public static TreeMap<String, TreeSet<String>> map;
+	public static ArrayList<String> sortList;
+	public static void GetIndex() throws IOException, InterruptedException  {
+		//Get all the file path
 		List<String> files = Toolkit.DirctoryListing();
 		int size = files.size();
+		
 		//int size = 500;
-		TreeMap<String, TreeSet<String>> list1 = GetPartIndex(0,size/2,files);
-		TreeMap<String, TreeSet<String>> list2 = GetPartIndex(size/2,size,files);
-		TreeMap<String, TreeSet<String>> list3 = Merge.merge(list1, list2);		
-		//list3.
+		/*TreeMap<String, TreeSet<String>> list1 = GetPartIndex(0,size/2,files);
+		TreeMap<String, TreeSet<String>> list2 = GetPartIndex(size/2,size,files);*/
+		
+		/*TreeMap<String, TreeSet<String>> list1 = GetPartIndex(0,size/4,files);
+		TreeMap<String, TreeSet<String>> list2 = GetPartIndex(size/4,2*size/4,files);
+		TreeMap<String, TreeSet<String>> list21 = GetPartIndex(2*size/4,3*size/4,files);
+		TreeMap<String, TreeSet<String>> list22 = GetPartIndex(3*size/4,size,files);
+		MultiThread threadRuning1 = new MultiThread(0,size/3,files);
+        threadRuning1.start();
+        MultiThread threadRuning2 = new MultiThread(size/3,2*size/3,files);
+        threadRuning2.start();
+        MultiThread threadRuning3 = new MultiThread(2*size/3,size,files);
+        threadRuning3.start();
+        */
+		
+		//divided the files into 3 parts
+		TreeMap<String, TreeSet<String>> list1 = GetPartIndex(0,size/3,files);
+		TreeMap<String, TreeSet<String>> list2 = GetPartIndex(size/3,2*size/3,files);
+		TreeMap<String, TreeSet<String>> list21 = GetPartIndex(2*size/3,size,files);
+		TreeMap<String, TreeSet<String>> list3 = Merge.merge(list1, list2);	
+		//Merge the index
+		list3 = Merge.merge(list3, list21);	
 		File path  = new File(ResourceUtils.getURL("classpath:").getPath());
-		convertToXml(list3,path + "/static/index.xml");
-
+		Toolkit.convertToXml(list3,path + "/static/index.xml");
+			sortList=Optimizer.getFrequency(list3);
+		
+		
 	}
+	
+	//To build index
 	public static TreeMap<String, TreeSet<String>> GetPartIndex(int begin,int end,List<String> files) throws IOException
 	{
-		ArrayList<Pair<String,String>> out= new ArrayList<Pair<String,String>>();		
+		ArrayList<Pair<String,String>> out= new ArrayList<Pair<String,String>>();
+		//handle each files individually and add the tokens into one list
 		for(int i =begin;i<end;i++)
 		{
 			String docID = files.get(i);
@@ -52,18 +80,38 @@ public class Mainclass
 			ArrayList<Pair<String,String>> outPutList2 = Linguistic.Linguistics(outPutList);
 			out.addAll(outPutList2);
 		}
+		//sort the index
 		ArrayList<Pair<String,String>> outPutList3 = PairList.sortPairList(out);
+		//Transformation the list3
 		TreeMap<String, TreeSet<String>> outMap = Transformation.trans(outPutList3);
 		return outMap;
 	}
-
+   
+	//to handle the calling from client
 	public static ArrayList<String> hi(String key) throws IOException
     {
+		//tokenize and stem the key words like the files
 		ArrayList<String> keys= Tokenization.TokenizeKeys(key);
 		keys = Linguistic.LinguisticsKeys(keys);
-		File path  = new File(ResourceUtils.getURL("classpath:").getPath());
-		TreeMap<String, TreeSet<String>> map = (TreeMap<String, TreeSet<String>>) convertXmlFileToObject(TreeMap.class, path + "/static/index.xml");
+		//get the index which is stored in files
+if(path==null)
+{
+	path  = new File(ResourceUtils.getURL("classpath:").getPath());
+	map = (TreeMap<String, TreeSet<String>>) Toolkit.convertXmlFileToObject(TreeMap.class, path + "/static/index.xml");
+}
+		
+
 		ArrayList<String> results = new ArrayList<String>();
+		keys.sort(new Comparator<String>(){
+		    @Override
+			public int compare(String o1, String o2) 
+		    {
+		    	int index1 = sortList.indexOf(o1);
+		    	int index2 = sortList.indexOf(o2);
+		    	return index1>=index2?0:1;
+
+			}
+	});
 	    for(int i=0;i<keys.size();i++) 
 	    {
 	    	String keyi = keys.get(i);
@@ -82,39 +130,5 @@ public class Mainclass
 	    }
 	    return results;
     }
-	public static void convertToXml(TreeMap<String, TreeSet<String>> obj, String path) throws IOException {  
-        try {  
-        	FileOutputStream fos = new FileOutputStream(path);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-             oos.writeObject(obj);
-             oos.flush();
-             fos.flush();
-             oos.close();
-             }
-        catch (FileNotFoundException e) {e.printStackTrace();}
-            
-	}
-        
-        @SuppressWarnings("unchecked")  
-        /** 
-         * 将file类型的xml转换成对象 
-         */  
-        public static TreeMap<String, TreeSet<String>> convertXmlFileToObject(Class clazz, String xmlPath) throws IOException {  
-        	TreeMap<String, TreeSet<String>> anotherList = new TreeMap<String, TreeSet<String>>();
-        	try {  
-                FileInputStream fis = new FileInputStream(xmlPath);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                anotherList = (TreeMap<String, TreeSet<String>>) ois.readObject();
-                ois.close(); 
-            } catch (Exception e) {  
-                e.printStackTrace();  
-            }  
-            return anotherList;  
-        }  
-
-	/*public static void Main(String[] args) throws IOException 
-	{
-		GetIndex();
-	}*/
 
 }

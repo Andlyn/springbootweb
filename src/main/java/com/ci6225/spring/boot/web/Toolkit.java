@@ -2,6 +2,8 @@ package com.ci6225.spring.boot.web;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ResourceUtils;
@@ -40,5 +42,36 @@ public static List<String> DirctoryListing()
 		return sb.toString();
 
 	}
+	
+	public static void convertToXml(TreeMap<String, TreeSet<String>> obj, String path) throws IOException {  
+        try {  
+        	FileOutputStream fos = new FileOutputStream(path);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+             oos.writeObject(obj);
+             oos.flush();
+             fos.flush();
+             oos.close();
+             }
+        catch (FileNotFoundException e) {e.printStackTrace();}
+            
+	}
+        
+        @SuppressWarnings("unchecked")  
+        /** 
+         * 将file类型的xml转换成对象 
+         */  
+        public static TreeMap<String, TreeSet<String>> convertXmlFileToObject(Class clazz, String xmlPath) throws IOException {  
+        	TreeMap<String, TreeSet<String>> anotherList = new TreeMap<String, TreeSet<String>>();
+        	try {  
+                FileInputStream fis = new FileInputStream(xmlPath);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                anotherList = (TreeMap<String, TreeSet<String>>) ois.readObject();
+                ois.close(); 
+            } catch (Exception e) {  
+                e.printStackTrace();  
+            }  
+            return anotherList;  
+        }  
+
 
 }

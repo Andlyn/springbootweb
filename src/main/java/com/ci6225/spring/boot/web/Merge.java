@@ -16,7 +16,7 @@ public class Merge {
 			} 
 			else { //倒排索引中还没添加这个词
 				innerSet = new TreeSet<String>();
-				innerSet.add((String)temp.getKey());
+				innerSet.addAll(temp.getValue());
 				map1.put((String)temp.getKey(), innerSet);
 			}
 		}
