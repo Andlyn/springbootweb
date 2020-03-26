@@ -31,7 +31,7 @@ public class HelloController {
 		Date d2 = new Date();
 		long afterFree = Runtime.getRuntime().freeMemory();
 		//long d3 =d2.getTime() - d1.getTime();
-		return"Started creating: "+sdf.format(d1)+" Finished: " +sdf.format(d2) + " Free Memory before buliding index: " + beforeFree  +" Free Memory after buliding index: "+afterFree;
+		return"Finished index construction."+"</br>"+" Started creating: "+sdf.format(d1)+" Finished: " +sdf.format(d2) + " Free Memory before buliding index: " + beforeFree  +" Free Memory after buliding index: "+afterFree;
 		
 	}
 	

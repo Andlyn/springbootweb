@@ -64,7 +64,6 @@ public class Mainclass
 		Toolkit.convertToXml(list3,path + "/static/index.xml");
 			sortList=Optimizer.getFrequency(list3);
 		
-		
 	}
 	
 	//To build index
